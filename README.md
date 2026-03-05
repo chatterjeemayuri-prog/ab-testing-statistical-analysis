@@ -19,3 +19,10 @@ The goal of this project is to simulate an experiment with two groups and determ
 
 ## Outcome
 The analysis demonstrates how statistical tests can be used to evaluate whether differences between two groups are statistically significant and how the results can inform data-driven decisions.
+
+## Repository Structure
+
+ab-testing-statistical-analysis/
+│
+├── ab_test_analysis.R    # R script performing the statistical test
+└── README.md             # Project description and methodology
