@@ -26,3 +26,9 @@ ab-testing-statistical-analysis/
 │
 ├── ab_test_analysis.R    # R script performing the statistical test
 └── README.md             # Project description and methodology
+
+Author
+
+Mayuri Chatterjee
+PhD Researcher in Statistics
+Data Science | Statistical Modeling | Machine Learning
