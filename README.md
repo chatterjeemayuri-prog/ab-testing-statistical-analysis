@@ -1,6 +1,6 @@
 # Research Design
 
-> **Full research paper:** [View the compiled PDF](paper/ab_testing_mini_research.pdf)
+> **Full research paper:** [Stability-Based Early Stopping for Heterogeneous Effects in Sequential A/B Experiments](paper/ab_testing_mini_research.pdf)
 
 ## Working Research Question
 
