@@ -1,253 +1,455 @@
-# Stability-Based Early Stopping for Heterogeneous Effects in Sequential A/B Experiments
+# Research Design
 
-## Overview
+## Working Research Question
 
-This repository contains the simulation study and reproducible R code for:
+This project investigates the statistical and decision-making consequences of sequentially monitoring A/B experiments when treatment-effect heterogeneity is evaluated and potentially used to guide treatment decisions.
 
-**Stability-Based Early Stopping for Heterogeneous Effects in Sequential A/B Experiments**
+The central research question is:
 
-The project investigates whether the stability of an estimated harmful population can improve sequential stopping decisions when treatment effects are heterogeneous.
+> **When sequential A/B-testing procedures are used to discover heterogeneous treatment effects, how do different analysis and stopping strategies trade off statistical validity, detection speed, subgroup-effect estimation, and downstream decision quality?**
 
-The central idea is to combine:
+The study will conduct a controlled simulation-based comparison of established analytical strategies rather than proposing a new statistical testing procedure. Because the data-generating mechanisms will be known, the study will evaluate each strategy against the underlying treatment-effect structure and the optimal treatment decision under the simulated truth.
 
-1. a CATE-based harmful-fraction criterion; and
-2. a stability criterion based on Jaccard similarity between consecutive estimated harmful populations.
+The investigation will focus on four primary questions:
 
-The resulting stopping rule requires both conditions to be satisfied before an early stopping decision is made.
+1. **Statistical validity:** How do fixed-horizon and sequential analysis strategies differ in Type-I error, power, false subgroup discovery, bias, and uncertainty calibration?
 
----
+2. **Detection efficiency:** How do different sequential monitoring and stopping strategies trade off the speed of detecting genuine treatment-effect heterogeneity against sample size and the probability of failing to reach a reliable conclusion?
 
-## Research question
+3. **Subgroup-effect reliability:** How much selection-induced optimism arises when treatment-effect estimates are obtained for data-driven subgroups, and how does independent or subsequent evaluation affect this optimism?
 
-In a sequential A/B experiment with heterogeneous treatment effects:
+4. **Decision quality:** Do methods with stronger statistical performance necessarily produce better treatment decisions? This will be evaluated using decision-oriented quantities such as treatment-rule value and regret relative to the optimal treatment rule under the known data-generating mechanism.
 
-> Does requiring the estimated harmful population to remain stable across consecutive interim analyses reduce premature or reversible harm-based stopping decisions?
+The project will therefore connect four stages of the experimental decision process:
 
-The simulation compares a naive CATE-based stopping rule with a stability-enhanced rule.
+```math
+\text{Sequential monitoring}
+\rightarrow
+\text{HTE discovery}
+\rightarrow
+\text{Treatment-effect estimation}
+\rightarrow
+\text{Treatment decision}.
+```
 
----
+The objective is to provide a reproducible, decision-oriented benchmark of established approaches under controlled experimental conditions, with particular attention to the trade-off between early detection, statistical reliability, and downstream decision quality.
 
-## Method
+## Study Framework
 
-### CATE estimation
+The study will use controlled simulation experiments to evaluate established A/B-testing and heterogeneous-treatment-effect analysis strategies under known data-generating mechanisms.
 
-For each interim analysis, treatment-effect heterogeneity is estimated using a logistic regression containing:
+The fundamental unit of the simulation will be a randomized A/B experiment with a binary outcome. For individual $i$, let
 
-- treatment;
-- the baseline covariate;
-- treatment--covariate interaction.
+- $A_i$ denote randomized treatment assignment, with $A_i=0$ for control and $A_i=1$ for treatment;
+- $Y_i$ denote the observed binary outcome;
+- $X_i$ denote a vector of pre-treatment covariates.
 
-The estimated conditional average treatment effect is defined on the probability scale as
+Treatment assignment will be randomized according to
 
-\[
-\widehat{\tau}(x)
+```math
+A_i \sim \mathrm{Bernoulli}(\pi),
+```
+
+where the allocation probability $\pi$ will be specified as part of the simulation design.
+
+The outcome will be generated from a known data-generating mechanism. The corresponding conditional treatment effect will be defined as
+
+```math
+\tau(x)
 =
-\widehat{p}_1(x)
+E\{Y(1)-Y(0)\mid X=x\}.
+```
+
+Different simulation scenarios will specify different forms of $\tau(x)$, including settings with:
+
+1. no treatment-effect heterogeneity;
+2. homogeneous treatment effects;
+3. heterogeneous treatment effects that depend on a small number of covariates;
+4. heterogeneous effects with nonlinear or subgroup-specific structure; and
+5. heterogeneous effects in which the beneficial population represents only a subset of the overall experimental population.
+
+The simulation will distinguish between **prognostic covariates**, which affect the outcome but do not modify the treatment effect, and **predictive covariates**, which genuinely modify the treatment effect.
+
+For each simulated experiment, observations will accumulate sequentially. At predefined interim sample sizes, an analysis strategy will be applied to the data available at that point.
+
+The analysis strategy will determine whether:
+
+- evidence for treatment-effect heterogeneity has been obtained;
+- a candidate subgroup or treatment rule has been identified;
+- the experiment should continue;
+- or a treatment decision should be considered.
+
+The study will compare fixed-horizon and sequential analysis strategies. Sequential strategies may differ in their testing and stopping rules, while fixed-horizon strategies will provide a reference point against which the consequences of continuous monitoring can be evaluated.
+
+When a treatment rule or subgroup is selected, its estimated treatment effect will be distinguished from its true treatment effect under the known data-generating mechanism.
+
+For a treatment rule $d(x)\in\{0,1\}$, its population value will be defined as
+
+```math
+V(d)
+=
+E\{Y(d(X))\}.
+```
+
+Because the data-generating mechanism is known, the simulation will also define an optimal treatment rule $d^*(x)$ under each scenario. This permits evaluation of the decision quality of an estimated rule through quantities such as
+
+```math
+\mathrm{Regret}(\widehat d)
+=
+V(d^*)-V(\widehat d).
+```
+
+The simulation will therefore evaluate the complete experimental decision process:
+
+```math
+\text{Data generation}
+\rightarrow
+\text{Sequential monitoring}
+\rightarrow
+\text{HTE discovery}
+\rightarrow
+\text{Treatment-effect estimation}
+\rightarrow
+\text{Treatment decision}.
+```
+
+This framework separates statistical evidence from downstream decision quality. A procedure may identify treatment-effect heterogeneity with high statistical power while still producing a treatment rule with poor value or substantial regret. Conversely, a more conservative procedure may delay detection while producing more reliable treatment decisions.
+
+The final simulation scenarios, analytical strategies, stopping rules, and numerical parameter values will be specified separately before computational experiments are implemented.
+
+## Analytical Strategies
+
+The simulation study will compare four broad experimental analysis strategies. The objective is to evaluate the consequences of the complete analysis workflow rather than to identify a universally superior statistical test.
+
+### Strategy 1: Fixed-horizon aggregate A/B analysis
+
+The experiment will continue to a pre-specified final sample size. The primary analysis will estimate the overall average treatment effect without attempting to identify treatment-effect heterogeneity.
+
+This strategy provides a reference point representing a conventional A/B-testing workflow in which the treatment decision is based on population-level treatment effectiveness.
+
+The primary quantities of interest will include:
+
+- Type-I error and power for the overall treatment effect;
+- bias and uncertainty of the estimated treatment effect;
+- treatment-decision accuracy; and
+- downstream treatment-rule value where applicable.
+
+### Strategy 2: Fixed-horizon HTE analysis
+
+The experiment will again continue to a pre-specified final sample size, but the analysis will additionally evaluate treatment-effect heterogeneity and identify candidate treatment modifiers or subgroups.
+
+This strategy represents a fixed-horizon data-driven HTE workflow.
+
+Performance will be evaluated using quantities including:
+
+- detection of genuine treatment-effect heterogeneity;
+- false discovery of treatment modifiers;
+- estimation of subgroup treatment effects;
+- selection-induced optimism;
+- treatment-rule value; and
+- regret relative to the optimal treatment rule.
+
+### Strategy 3: Sequential HTE analysis
+
+The accumulating experiment will be evaluated at pre-specified interim sample sizes using an established sequential HTE or beneficial-subgroup testing procedure.
+
+The study will consider established procedures from the literature rather than proposing a new sequential testing method. Candidate procedures will include approaches represented by the SST and SUBTLE frameworks, subject to compatibility of their assumptions and estimands with the common simulation setting.
+
+The analysis will evaluate:
+
+- Type-I error;
+- probability of detecting genuine heterogeneity;
+- detection time;
+- expected sample size;
+- false subgroup discovery;
+- and downstream treatment-decision quality.
+
+### Strategy 4: Sequential discovery followed by independent evaluation
+
+A candidate treatment-effect pattern, subgroup, or treatment rule may be identified during the sequential analysis. Its estimated treatment effect and decision value will subsequently be evaluated using observations that were not used for the initial discovery.
+
+This strategy is intended to quantify the consequences of separating discovery from evaluation.
+
+The study will compare:
+
+```math
+\text{estimated effect at discovery}
+```
+
+with
+
+```math
+\text{effect estimated using subsequent evaluation data}.
+```
+
+This will allow selection-induced optimism and the reliability of the resulting treatment decision to be quantified.
+
+The use of subsequent evaluation data is not itself presented as a novel methodological contribution. Instead, the simulation study will investigate its performance systematically across controlled experimental conditions and compare it with fixed-horizon and sequential alternatives.
+
+### Comparative principle
+
+The four strategies will be evaluated within a common data-generating framework and against the same underlying treatment-effect truth.
+
+The comparison will therefore focus on the trade-offs among:
+
+```math
+\text{statistical validity},
+\quad
+\text{detection efficiency},
+\quad
+\text{effect-estimation reliability},
+\quad
+\text{and decision quality}.
+```
+
+The specific statistical procedures used to instantiate Strategies 2–4 will be selected only after their assumptions, estimands, and inferential guarantees have been mapped to the simulation scenarios.
+
+## Evaluation Framework
+
+The performance of each analytical strategy will be evaluated across four complementary domains: statistical validity, detection efficiency, estimation reliability, and decision quality.
+
+### 1. Statistical validity
+
+Statistical validity will assess whether a procedure maintains appropriate error rates under scenarios in which the relevant null hypothesis is true.
+
+Primary quantities will include:
+
+- empirical Type-I error;
+- false treatment-effect modifier discovery;
+- false subgroup discovery; and
+- power or true-discovery probability when genuine treatment effects or treatment-effect heterogeneity are present.
+
+For sequential procedures, error rates will be evaluated with respect to the complete monitoring and stopping process rather than only the final analysis.
+
+### 2. Detection efficiency
+
+For sequential strategies, the study will quantify the amount of information required to reach a discovery or stopping decision.
+
+Primary quantities will include:
+
+```math
+T_{\mathrm{detect}}
+```
+
+representing the sample size at which genuine treatment-effect heterogeneity is detected, and
+
+```math
+E[N_{\mathrm{stop}}]
+```
+
+representing the expected sample size at stopping.
+
+The probability of failing to reach a discovery decision before the maximum permitted sample size will also be evaluated.
+
+These quantities will allow statistical reliability to be compared against the speed and data requirements of different analysis strategies.
+
+### 3. Estimation reliability
+
+For a selected subgroup or treatment rule, the estimated treatment effect will be compared with the corresponding true effect under the data-generating mechanism.
+
+Primary quantities will include bias,
+
+```math
+\mathrm{Bias}
+=
+E[\widehat{\tau}-\tau],
+```
+
+and confidence-interval coverage,
+
+```math
+P\{\tau\in CI\}.
+```
+
+The study will also quantify selection-induced optimism by comparing an effect estimated using data involved in discovery with an effect estimated using independent or subsequent evaluation data.
+
+A generic measure of selection optimism will be
+
+```math
+O
+=
+\widehat{\tau}_{\mathrm{discovery}}
 -
-\widehat{p}_0(x).
-\]
+\widehat{\tau}_{\mathrm{evaluation}}.
+```
 
-### Meaningful harm
+The interpretation of this quantity will depend on the direction and estimand of the treatment effect being evaluated.
 
-An observation is classified as experiencing meaningful harm when
+### 4. Decision quality
 
-\[
-\widehat{\tau}(X_i)\leq -0.02.
-\]
+Statistical evidence will ultimately be evaluated in terms of the treatment decisions it supports.
 
-The estimated harmful fraction is
+For a treatment rule $d(X)$, the population value will be defined as
 
-\[
-\widehat h_k
+```math
+V(d)
 =
-\frac{|\widehat{\mathcal H}_k|}{n_k}.
-\]
+E\{Y(d(X))\}.
+```
 
-The basic stopping criterion is
+Because the true data-generating mechanism is known in simulation, an optimal treatment rule $d^*(X)$ can be defined for each scenario.
 
-\[
-\widehat h_k \geq 0.50.
-\]
+Decision regret will then be measured as
 
-### Stability
-
-For consecutive interim harmful sets,
-
-\[
-\widehat{\mathcal H}_{k-1}
-\quad\text{and}\quad
-\widehat{\mathcal H}_k,
-\]
-
-stability is measured using the Jaccard similarity
-
-\[
-J_k
+```math
+R(\widehat d)
 =
-\frac{
-|\widehat{\mathcal H}_{k-1}
-\cap
-\widehat{\mathcal H}_k|
-}{
-|\widehat{\mathcal H}_{k-1}
-\cup
-\widehat{\mathcal H}_k|
-}.
-\]
+V(d^*)-V(\widehat d).
+```
 
-The stability-enhanced stopping rule requires
+Additional decision-oriented quantities may include:
 
-\[
-\widehat h_k \geq 0.50
-\]
+- probability of deploying an ineffective treatment rule;
+- probability of failing to deploy a genuinely beneficial treatment rule;
+- treatment-rule value;
+- and the relationship between statistical evidence and downstream decision quality.
 
-and
+### Integrated evaluation
 
-\[
-J_k \geq J_0.
-\]
+The four evaluation domains will be considered jointly rather than as independent performance rankings.
 
-The sensitivity analysis considers
+The study will investigate whether improved statistical detection necessarily produces improved treatment decisions, and whether more conservative procedures can achieve better decision quality by reducing false discoveries, estimation optimism, or unstable treatment-rule selection.
 
-\[
-J_0
-\in
-\{0.50,0.60,0.70,0.75,0.80,0.90\}.
-\]
+The final comparison will therefore characterize the trade-off between
 
-The value \(J_0=0.75\) is used as an illustrative operating point, not as an optimized universal threshold.
+```math
+\text{validity}
+\quad\leftrightarrow\quad
+\text{efficiency}
+\quad\leftrightarrow\quad
+\text{estimation reliability}
+\quad\leftrightarrow\quad
+\text{decision quality}.
+```
 
----
+Exact estimands, performance metrics, and computational definitions will be finalized before the simulation experiments are implemented.
 
-## Simulation design
+## Simulation Dimensions
 
-The simulation uses:
+The simulation study will vary six primary dimensions that determine the difficulty and reliability of treatment-effect heterogeneity discovery.
 
-- 500 replicated experiments;
-- 4,000 observations per experiment;
-- randomized treatment allocation with probability 0.5;
-- a baseline covariate;
-- six interim analyses.
+### 1. Sample size
 
-The interim sample sizes are
+The total number of observations in each experiment will be varied across small, moderate, and large sample-size regimes.
 
-\[
-1000,\;1600,\;2200,\;2800,\;3400,\;4000.
-\]
+This dimension will be used to investigate finite-sample limitations in the estimation and detection of treatment-effect heterogeneity.
 
-Two heterogeneous-effect scenarios are considered.
+### 2. Number of candidate treatment modifiers
 
-### Scenario A: threshold heterogeneity
+The number of pre-treatment covariates and subgroup variables available for potential treatment-effect modification will be varied.
 
-Treatment has no effect for most of the population and a harmful effect in an upper-tail subgroup of the baseline covariate.
+Only a subset of these variables will contain genuine treatment-effect heterogeneity. Increasing the number of candidate modifiers will therefore increase the size of the search space and the opportunity for false discoveries.
 
-The control outcome probability is 0.10.
+### 3. Sparsity of true treatment heterogeneity
 
-Within the harmed subgroup, the treatment effect is -0.04.
+The number and proportion of candidate variables that genuinely modify treatment response will be varied.
 
-This produces a relatively sharp heterogeneous treatment-effect structure.
+The study will therefore consider both relatively sparse settings, in which only a small number of variables modify treatment response, and less sparse settings with a larger number of genuine modifiers.
 
-### Scenario B: smooth logistic heterogeneity
+### 4. Strength of treatment-effect heterogeneity
 
-Treatment effects vary smoothly with the baseline covariate through a logistic treatment-response model.
+The magnitude of genuine treatment-effect modification will be varied across weak, moderate, and strong regimes.
 
-The resulting true CATE is approximately in the range
+This will allow the study to investigate the boundary between the existence of treatment heterogeneity and its reliable statistical detection.
 
-\[
-[-0.062,-0.014],
-\]
+### 5. Sequential monitoring intensity
 
-with an average effect of approximately -0.037 in the simulated population.
+Selected experiments will be evaluated at multiple interim sample sizes.
 
----
+The frequency of interim analyses will be varied to investigate whether repeated opportunities to inspect accumulating data and search for treatment-effect heterogeneity increase false discoveries or otherwise affect statistical decision-making.
 
-## Main findings
+### 6. Correlation among candidate covariates
 
-At the illustrative stability threshold
+The dependence structure among candidate pre-treatment covariates will be varied.
 
-\[
-J_0=0.75,
-\]
+Scenarios with weakly correlated covariates will be compared with scenarios containing stronger correlation. This will allow the study to investigate whether correlated candidate modifiers make it more difficult to distinguish genuine treatment-effect modifiers from variables that are associated with them.
 
-the results are:
+### Simulation design principle
 
-| Metric | Scenario A | Scenario B |
-|---|---:|---:|
-| Naive stopping probability | 39.2% | 99.0% |
-| Stable stopping probability | 31.4% | 98.6% |
-| Naive agreement with final decision | 79.2% | 98.8% |
-| Stable agreement with final decision | 85.4% | 98.4% |
-| Naive reversal probability | 20.8% | 1.2% |
-| Stable reversal probability | 13.8% | 1.2% |
-| Naive mean stopping sample size | 1,898 | 1,677 |
-| Stable mean stopping sample size | 2,269 | 1,859 |
+The full simulation study will not evaluate every possible combination of these dimensions. Such a design would produce an unnecessarily large and difficult-to-interpret simulation space.
 
-The principal pattern is that the stability criterion has its largest effect in the threshold scenario, where the estimated harmful population is less persistent across interim analyses.
+Instead, the study will use a structured set of scenarios. Baseline scenarios will establish reference operating characteristics, followed by targeted perturbations of individual dimensions and a smaller number of combined stress scenarios.
 
-Increasing the Jaccard threshold produces a trade-off:
+The final simulation grid will be specified before computational experiments are conducted.
 
-- higher stability requirements reduce early stopping;
-- reversal probability decreases;
-- mean stopping sample size increases.
+## Baseline Scenario
 
-The smooth scenario is substantially less sensitive to the stability threshold.
+A baseline simulation scenario will be established as the reference point for the subsequent simulation experiments.
 
----
+The baseline will represent a relatively well-behaved randomized A/B experiment with the following characteristics:
 
-## Repository structure
+* a binary conversion outcome;
+* randomized treatment assignment with equal allocation between treatment and control;
+* a moderate total sample size;
+* a moderate baseline conversion probability;
+* a small number of pre-treatment covariates that may be prognostic for the outcome;
+* no genuine treatment-effect heterogeneity;
+* candidate treatment modifiers that are available for analysis but do not genuinely modify the treatment effect;
+* no sequential monitoring or interim analysis.
 
-```text
-ab_testing/
-│
-├── README.md
-│
-├── R_files/
-│   ├── 01_data_generation.R
-│   ├── 02_cate_estimation.R
-│   ├── 03_sequential_simulation.R
-│   ├── 04_repeated_sequential_simulation.R
-│   ├── 05_stopping_rules.R
-│   ├── 06_stable_cate_stopping.R
-│   ├── 07_cate_stability_metrics.R
-│   ├── 08_stability_threshold_sensitivity.R
-│   └── 09_final_figures.R
-│
-├── paper/
-│   ├── main.tex
-│   ├── references.bib
-│   └── figures/
-│       ├── Figure_1_harm_fraction.png
-│       ├── Figure_2_jaccard_stability.png
-│       ├── Figure_3_stopping_probability.png
-│       ├── Figure_4_reversal_probability.png
-│       └── Figure_5_mean_stopping_sample_size.png
-│
-└── results/
-    ├── cate_estimates_A_threshold.csv
-    ├── cate_estimates_B_smooth_logistic.csv
-    ├── cate_stability_results.csv
-    ├── cate_stability_summary.csv
-    ├── cate_validation_A_threshold.csv
-    ├── cate_validation_by_subgroup.csv
-    ├── cate_validation_B_smooth_logistic.csv
-    ├── cate_validation_summary.csv
-    ├── main_results_table.csv
-    ├── mean_stopping_times.csv
-    ├── repeated_sequential_quantiles.csv
-    ├── repeated_sequential_results.csv
-    ├── repeated_sequential_summary.csv
-    ├── sequential_CATE_summary.csv
-    ├── simulation_data_scenario_A.csv
-    ├── simulation_data_scenario_B.csv
-    ├── simulation_parameters.csv
-    ├── simulation_validation.csv
-    ├── stability_threshold_mean_stopping_times.csv
-    ├── stability_threshold_median_stopping_times.csv
-    ├── stability_threshold_performance.csv
-    ├── stability_threshold_results.csv
-    ├── stable_cate_decisions.csv
-    ├── stable_cate_mean_stopping_times.csv
-    ├── stable_cate_performance_summary.csv
-    ├── stable_cate_stopping_time_distribution.csv
-    ├── stopping_decisions.csv
-    └── stopping_performance_summary.csv
+The baseline scenario is intentionally designed to contain **no true treatment-effect heterogeneity**. This provides a reference environment in which any apparent treatment-effect modifiers identified by the analytical procedures are false discoveries.
+
+The baseline will therefore be used primarily to evaluate:
+
+* empirical Type-I error;
+* false treatment-effect modifier discovery;
+* calibration of uncertainty estimates;
+* estimation bias;
+* confidence-interval coverage; and
+* the stability of statistical decisions under repeated simulation.
+
+All numerical parameters for the baseline scenario will be selected and justified separately before the simulation is implemented.
+
+## Parameter Selection Protocol
+
+Numerical parameters for the simulation study will be selected using a combination of empirical plausibility, methodological literature, and deliberately constructed stress scenarios.
+
+### Empirically plausible regimes
+
+Where appropriate, baseline values and ranges will be motivated by realistic A/B-testing settings. This will include quantities such as:
+
+* baseline conversion probability;
+* treatment-effect magnitude;
+* sample size;
+* treatment allocation ratio; and
+* plausible dependence among pre-treatment covariates.
+
+The objective is to ensure that the reference scenarios represent credible experimental settings rather than arbitrary numerical examples.
+
+### Literature-motivated regimes
+
+For methodological quantities for which no single empirical value is appropriate, parameter ranges will be informed by relevant statistical literature, particularly literature concerning:
+
+* treatment-effect heterogeneity;
+* multiple testing and false discoveries;
+* sequential monitoring;
+* covariate adjustment; and
+* high-dimensional or correlated candidate treatment modifiers.
+
+Relevant sources will be documented so that the choices can be evaluated and reproduced.
+
+### Deliberate stress scenarios
+
+In addition to reference scenarios, the simulation study will include deliberately difficult settings designed to identify conditions under which treatment-effect discovery and downstream decisions become unreliable.
+
+Examples may include combinations of:
+
+* many candidate treatment modifiers;
+* weak genuine heterogeneity;
+* strong correlation among candidate covariates;
+* limited sample sizes; and
+* frequent interim analyses.
+
+These scenarios will be explicitly identified as stress tests rather than representative experimental settings.
+
+### Scenario classification
+
+Each simulation scenario will be classified as one of:
+
+1. **Reference:** a plausible and relatively well-behaved experimental setting.
+2. **Perturbation:** a controlled change to one or more features of the reference setting used to isolate a specific methodological effect.
+3. **Stress test:** a deliberately difficult configuration used to investigate the limits of reliable treatment-effect discovery.
+
+The simulation design will prioritize interpretability over the exhaustive enumeration of parameter combinations. Each scenario will therefore be included because it addresses a specific research question or tests a clearly defined methodological hypothesis.
+
+All numerical parameter choices and their justification will be recorded before the corresponding computational experiments are conducted.
