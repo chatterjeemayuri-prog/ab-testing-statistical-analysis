@@ -36,64 +36,86 @@ The objective is to provide a reproducible, decision-oriented benchmark of estab
 
 ## Study Framework
 
-The study will use controlled simulation experiments to represent randomized A/B tests in which the analyst has access to multiple pre-treatment covariates and potential treatment-effect modifiers.
+The study will use controlled simulation experiments to evaluate established A/B-testing and heterogeneous-treatment-effect analysis strategies under known data-generating mechanisms.
 
-Each simulated experiment will contain (n) individuals. For individual (i), the following variables will be generated:
+The fundamental unit of the simulation will be a randomized A/B experiment with a binary outcome. For individual \(i\), let
 
-* (A_i): randomized treatment assignment, where (A_i=0) denotes control and (A_i=1) denotes treatment.
-* (Y_i): binary outcome representing whether the individual converts.
-* (X_{i1},\ldots,X_{ip}): a set of continuous pre-treatment covariates available to the analyst before treatment assignment.
-* (Z_i): one or more categorical pre-treatment variables representing potential subgroups.
+- \(A_i\) denote randomized treatment assignment, with \(A_i=0\) for control and \(A_i=1\) for treatment;
+- \(Y_i\) denote the observed binary outcome;
+- \(X_i\) denote a vector of pre-treatment covariates.
 
 Treatment assignment will be randomized according to
 
-[
-A_i \sim \operatorname{Bernoulli}(0.5).
-]
+\[
+A_i \sim \operatorname{Bernoulli}(\pi),
+\]
 
-The binary outcome will follow
+where the allocation probability \(\pi\) will be specified as part of the simulation design.
 
-[
-Y_i \sim \operatorname{Bernoulli}(p_i),
-]
+The outcome will be generated from a known data-generating mechanism. The corresponding conditional treatment effect will be defined as
 
-with the conversion probability generated through a logistic model.
+\[
+\tau(x)
+=
+E\{Y(1)-Y(0)\mid X=x\}.
+\]
 
-A general data-generating model will take the form
+Different simulation scenarios will specify different forms of \(\tau(x)\), including settings with:
 
-[
-\operatorname{logit}(p_i)
-=========================
+1. no treatment-effect heterogeneity;
+2. homogeneous treatment effects;
+3. heterogeneous treatment effects that depend on a small number of covariates;
+4. heterogeneous effects with nonlinear or subgroup-specific structure; and
+5. heterogeneous effects in which the beneficial population represents only a subset of the overall experimental population.
 
-\beta_0
-+\beta_A A_i
-+\sum_{j=1}^{p}\beta_j X_{ij}
-+\sum_{k}\gamma_k Z_{ik}
-+\sum_{j=1}^{p}\delta_j(A_iX_{ij})
-+\sum_k\eta_k(A_iZ_{ik}).
-]
+The simulation will distinguish between **prognostic covariates**, which affect the outcome but do not modify the treatment effect, and **predictive covariates**, which genuinely modify the treatment effect.
 
-The interaction terms represent treatment-effect modification. The simulation will distinguish between three types of candidate variables:
+For each simulated experiment, observations will accumulate sequentially. At predefined interim sample sizes, an analysis strategy will be applied to the data available at that point.
 
-1. **True treatment modifiers:** variables for which the treatment effect genuinely depends on the covariate or subgroup.
+The analysis strategy will determine whether:
 
-2. **Prognostic but non-modifying variables:** variables that affect the probability of conversion but do not modify the treatment effect.
+- evidence for treatment-effect heterogeneity has been obtained;
+- a candidate subgroup or treatment rule has been identified;
+- the experiment should continue;
+- or a treatment decision should be considered.
 
-3. **Irrelevant variables:** variables that have no meaningful relationship with either the outcome or the treatment effect.
+The study will compare fixed-horizon and sequential analysis strategies. Sequential strategies may differ in their testing and stopping rules, while fixed-horizon strategies will provide a reference point against which the consequences of continuous monitoring can be evaluated.
 
-Only a subset of the available candidate variables will therefore contain genuine information about treatment-effect heterogeneity.
+When a treatment rule or subgroup is selected, its estimated treatment effect will be distinguished from its true treatment effect under the known data-generating mechanism.
 
-The number of candidate variables, the number of true treatment modifiers, the strength of their effects, and the degree of correlation between covariates will be varied across simulation scenarios.
+For a treatment rule \(d(x)\in\{0,1\}\), its population value will be defined as
 
-This framework allows the study to investigate a central practical problem in A/B experimentation: an analyst may search across many possible interactions and subgroups even though only a small number represent genuine treatment-effect heterogeneity.
+\[
+V(d)
+=
+E\{Y(d(X))\}.
+\]
 
-Because the data-generating mechanism is controlled, the true treatment-effect structure will be known for every simulated experiment. This will allow the performance of different analytical strategies to be evaluated against known ground truth.
+Because the data-generating mechanism is known, the simulation will also define an optimal treatment rule \(d^*(x)\) under each scenario. This permits evaluation of the decision quality of an estimated rule through quantities such as
 
-The framework will also permit repeated interim analyses. In sequential-monitoring scenarios, the same accumulating experiment will be examined at multiple sample sizes, creating repeated opportunities to search for treatment-effect heterogeneity.
+\[
+\operatorname{Regret}(\widehat d)
+=
+V(d^*)-V(\widehat d).
+\]
 
-Numerical parameter values, covariance structures, sample sizes, and specific heterogeneity scenarios will be defined separately before computational experiments are implemented.
+The simulation will therefore evaluate the complete experimental decision process:
 
-Numerical parameter values and the specific simulation scenarios will be defined separately before the computational experiments are implemented.
+\[
+\text{Data generation}
+\rightarrow
+\text{Sequential monitoring}
+\rightarrow
+\text{HTE discovery}
+\rightarrow
+\text{Treatment-effect estimation}
+\rightarrow
+\text{Treatment decision}.
+\]
+
+This framework separates statistical evidence from downstream decision quality. A procedure may identify treatment-effect heterogeneity with high statistical power while still producing a treatment rule with poor value or substantial regret. Conversely, a more conservative procedure may delay detection while producing more reliable treatment decisions.
+
+The final simulation scenarios, analytical strategies, stopping rules, and numerical parameter values will be specified separately before computational experiments are implemented.
 
 ## Simulation Dimensions
 
