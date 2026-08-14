@@ -117,6 +117,93 @@ This framework separates statistical evidence from downstream decision quality. 
 
 The final simulation scenarios, analytical strategies, stopping rules, and numerical parameter values will be specified separately before computational experiments are implemented.
 
+## Analytical Strategies
+
+The simulation study will compare four broad experimental analysis strategies. The objective is to evaluate the consequences of the complete analysis workflow rather than to identify a universally superior statistical test.
+
+### Strategy 1: Fixed-horizon aggregate A/B analysis
+
+The experiment will continue to a pre-specified final sample size. The primary analysis will estimate the overall average treatment effect without attempting to identify treatment-effect heterogeneity.
+
+This strategy provides a reference point representing a conventional A/B-testing workflow in which the treatment decision is based on population-level treatment effectiveness.
+
+The primary quantities of interest will include:
+
+- Type-I error and power for the overall treatment effect;
+- bias and uncertainty of the estimated treatment effect;
+- treatment-decision accuracy; and
+- downstream treatment-rule value where applicable.
+
+### Strategy 2: Fixed-horizon HTE analysis
+
+The experiment will again continue to a pre-specified final sample size, but the analysis will additionally evaluate treatment-effect heterogeneity and identify candidate treatment modifiers or subgroups.
+
+This strategy represents a fixed-horizon data-driven HTE workflow.
+
+Performance will be evaluated using quantities including:
+
+- detection of genuine treatment-effect heterogeneity;
+- false discovery of treatment modifiers;
+- estimation of subgroup treatment effects;
+- selection-induced optimism;
+- treatment-rule value; and
+- regret relative to the optimal treatment rule.
+
+### Strategy 3: Sequential HTE analysis
+
+The accumulating experiment will be evaluated at pre-specified interim sample sizes using an established sequential HTE or beneficial-subgroup testing procedure.
+
+The study will consider established procedures from the literature rather than proposing a new sequential testing method. Candidate procedures will include approaches represented by the SST and SUBTLE frameworks, subject to compatibility of their assumptions and estimands with the common simulation setting.
+
+The analysis will evaluate:
+
+- Type-I error;
+- probability of detecting genuine heterogeneity;
+- detection time;
+- expected sample size;
+- false subgroup discovery;
+- and downstream treatment-decision quality.
+
+### Strategy 4: Sequential discovery followed by independent evaluation
+
+A candidate treatment-effect pattern, subgroup, or treatment rule may be identified during the sequential analysis. Its estimated treatment effect and decision value will subsequently be evaluated using observations that were not used for the initial discovery.
+
+This strategy is intended to quantify the consequences of separating discovery from evaluation.
+
+The study will compare:
+
+\[
+\text{estimated effect at discovery}
+\]
+
+with
+
+\[
+\text{effect estimated using subsequent evaluation data}.
+\]
+
+This will allow selection-induced optimism and the reliability of the resulting treatment decision to be quantified.
+
+The use of subsequent evaluation data is not itself presented as a novel methodological contribution. Instead, the simulation study will investigate its performance systematically across controlled experimental conditions and compare it with fixed-horizon and sequential alternatives.
+
+### Comparative principle
+
+The four strategies will be evaluated within a common data-generating framework and against the same underlying treatment-effect truth.
+
+The comparison will therefore focus on the trade-offs among:
+
+\[
+\text{statistical validity},
+\quad
+\text{detection efficiency},
+\quad
+\text{effect-estimation reliability},
+\quad
+\text{and decision quality}.
+\]
+
+The specific statistical procedures used to instantiate Strategies 2–4 will be selected only after their assumptions, estimands, and inferential guarantees have been mapped to the simulation scenarios.
+
 ## Simulation Dimensions
 
 The simulation study will vary six primary dimensions that determine the difficulty and reliability of treatment-effect heterogeneity discovery.
