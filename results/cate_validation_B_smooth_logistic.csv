@@ -1,0 +1,2 @@
+"scenario","MAE","RMSE","bias","correlation","CATE_95pct_coverage"
+"B_smooth_logistic",0.00250637332670269,0.00285245285778829,-0.000602030405947413,0.99942109285199,1

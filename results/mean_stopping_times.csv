@@ -1,0 +1,3 @@
+"scenario","mean_first_stop_ATE","mean_first_stop_CATE"
+"A_threshold",1492.06349206349,1302.51046025105
+"B_smooth_logistic",1039.67935871743,1004.8

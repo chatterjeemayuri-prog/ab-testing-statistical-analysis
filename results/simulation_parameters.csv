@@ -1,0 +1,10 @@
+"parameter","value"
+"N",4000
+"allocation_probability",0.5
+"harmed_group_probability",0.25
+"scenario_A_baseline_probability",0.1
+"scenario_A_harm_effect",-0.04
+"scenario_B_beta_0",-2.19722457733622
+"scenario_B_beta_X",0.2
+"scenario_B_beta_A",-0.5
+"scenario_B_beta_AX",-0.3

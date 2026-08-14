@@ -1,0 +1,3 @@
+"scenario","sample_size","treatment_rate","harmed_group_rate","mean_true_CATE","min_true_CATE","max_true_CATE","mean_control_probability","mean_treatment_probability"
+"A_threshold",4000,0.49525,0.25675,-0.01027,-0.04,0,0.1,0.08973
+"B_smooth_logistic",4000,0.4955,NA,-0.0373020988692602,-0.0620026005449511,-0.0140701675203247,0.100514605428933,0.0632125065596728

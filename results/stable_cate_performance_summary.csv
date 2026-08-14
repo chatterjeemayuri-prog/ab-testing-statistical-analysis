@@ -1,0 +1,3 @@
+"scenario","naive_stopped","stable_stopped","naive_agrees_final","stable_agrees_final","naive_reversal","stable_reversal"
+"A_threshold",0.472,0.318,0.714,0.828,0.286,0.152
+"B_smooth_logistic",0.998,0.982,0.98,0.984,0.02,0.01

@@ -1,0 +1,13 @@
+"scenario","jaccard_threshold","naive_first_stop_n","stable_first_stop_n"
+"A_threshold",0.5,1600,1600
+"B_smooth_logistic",0.5,1600,1600
+"A_threshold",0.6,1600,1600
+"B_smooth_logistic",0.6,1600,1600
+"A_threshold",0.7,1600,1600
+"B_smooth_logistic",0.7,1600,1600
+"A_threshold",0.75,1600,2200
+"B_smooth_logistic",0.75,1600,1600
+"A_threshold",0.8,1600,2200
+"B_smooth_logistic",0.8,1600,1600
+"A_threshold",0.9,1600,2200
+"B_smooth_logistic",0.9,1600,2200

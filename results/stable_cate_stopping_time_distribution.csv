@@ -1,0 +1,3 @@
+"scenario","naive_first_stop_n.q025.2.5%","naive_first_stop_n.median.50%","naive_first_stop_n.q975.97.5%","stable_first_stop_n.q025.2.5%","stable_first_stop_n.median.50%","stable_first_stop_n.q975.97.5%"
+"A_threshold",1000,1000,3400,1600,1600,4000
+"B_smooth_logistic",1000,1000,2200,1600,1600,3400

@@ -1,0 +1,3 @@
+"scenario","jaccard_threshold","naive_stopped","stable_stopped","naive_agrees_final","stable_agrees_final","naive_reversal","stable_reversal","naive_first_stop_n","stable_first_stop_n"
+"A_threshold",0.75,0.392,0.314,0.792,0.854,0.208,0.138,1898.08917197452,2268.7898089172
+"B_smooth_logistic",0.75,0.99,0.986,0.988,0.984,0.012,0.012,1676.67342799189,1859.22920892495
