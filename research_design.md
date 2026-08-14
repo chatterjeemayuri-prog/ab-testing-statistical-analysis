@@ -131,4 +131,31 @@ Instead, the study will use a structured set of scenarios. Baseline scenarios wi
 
 The final simulation grid will be specified before computational experiments are conducted.
 
+## Baseline Scenario
+
+A baseline simulation scenario will be established as the reference point for the subsequent simulation experiments.
+
+The baseline will represent a relatively well-behaved randomized A/B experiment with the following characteristics:
+
+* a binary conversion outcome;
+* randomized treatment assignment with equal allocation between treatment and control;
+* a moderate total sample size;
+* a moderate baseline conversion probability;
+* a small number of pre-treatment covariates that may be prognostic for the outcome;
+* no genuine treatment-effect heterogeneity;
+* candidate treatment modifiers that are available for analysis but do not genuinely modify the treatment effect;
+* no sequential monitoring or interim analysis.
+
+The baseline scenario is intentionally designed to contain **no true treatment-effect heterogeneity**. This provides a reference environment in which any apparent treatment-effect modifiers identified by the analytical procedures are false discoveries.
+
+The baseline will therefore be used primarily to evaluate:
+
+* empirical Type-I error;
+* false treatment-effect modifier discovery;
+* calibration of uncertainty estimates;
+* estimation bias;
+* confidence-interval coverage; and
+* the stability of statistical decisions under repeated simulation.
+
+All numerical parameters for the baseline scenario will be selected and justified separately before the simulation is implemented.
 
