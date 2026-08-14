@@ -159,3 +159,56 @@ The baseline will therefore be used primarily to evaluate:
 
 All numerical parameters for the baseline scenario will be selected and justified separately before the simulation is implemented.
 
+## Parameter Selection Protocol
+
+Numerical parameters for the simulation study will be selected using a combination of empirical plausibility, methodological literature, and deliberately constructed stress scenarios.
+
+### Empirically plausible regimes
+
+Where appropriate, baseline values and ranges will be motivated by realistic A/B-testing settings. This will include quantities such as:
+
+* baseline conversion probability;
+* treatment-effect magnitude;
+* sample size;
+* treatment allocation ratio; and
+* plausible dependence among pre-treatment covariates.
+
+The objective is to ensure that the reference scenarios represent credible experimental settings rather than arbitrary numerical examples.
+
+### Literature-motivated regimes
+
+For methodological quantities for which no single empirical value is appropriate, parameter ranges will be informed by relevant statistical literature, particularly literature concerning:
+
+* treatment-effect heterogeneity;
+* multiple testing and false discoveries;
+* sequential monitoring;
+* covariate adjustment; and
+* high-dimensional or correlated candidate treatment modifiers.
+
+Relevant sources will be documented so that the choices can be evaluated and reproduced.
+
+### Deliberate stress scenarios
+
+In addition to reference scenarios, the simulation study will include deliberately difficult settings designed to identify conditions under which treatment-effect discovery and downstream decisions become unreliable.
+
+Examples may include combinations of:
+
+* many candidate treatment modifiers;
+* weak genuine heterogeneity;
+* strong correlation among candidate covariates;
+* limited sample sizes; and
+* frequent interim analyses.
+
+These scenarios will be explicitly identified as stress tests rather than representative experimental settings.
+
+### Scenario classification
+
+Each simulation scenario will be classified as one of:
+
+1. **Reference:** a plausible and relatively well-behaved experimental setting.
+2. **Perturbation:** a controlled change to one or more features of the reference setting used to isolate a specific methodological effect.
+3. **Stress test:** a deliberately difficult configuration used to investigate the limits of reliable treatment-effect discovery.
+
+The simulation design will prioritize interpretability over the exhaustive enumeration of parameter combinations. Each scenario will therefore be included because it addresses a specific research question or tests a clearly defined methodological hypothesis.
+
+All numerical parameter choices and their justification will be recorded before the corresponding computational experiments are conducted.
