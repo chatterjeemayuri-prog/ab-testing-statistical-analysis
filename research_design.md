@@ -2,25 +2,37 @@
 
 ## Working Research Question
 
-This project investigates the reliability of discovering heterogeneous treatment effects from A/B experiments when analysts have multiple potential treatment modifiers and repeated opportunities to inspect accumulating data.
+This project investigates the statistical and decision-making consequences of sequentially monitoring A/B experiments when treatment-effect heterogeneity is evaluated and potentially used to guide treatment decisions.
 
 The central research question is:
 
-> **How reliable is treatment-effect heterogeneity discovered from sequentially monitored A/B experiments when analysts search across multiple pre-treatment covariates and subgroups, and how do statistical error-control strategies affect the quality of the resulting decisions?**
+> **When sequential A/B-testing procedures are used to discover heterogeneous treatment effects, how do different analysis and stopping strategies trade off statistical validity, detection speed, subgroup-effect estimation, and downstream decision quality?**
 
-The study will use controlled simulation experiments in which the true treatment-effect structure is known. The simulated experiments will vary the number of candidate treatment modifiers, the strength and structure of genuine treatment-effect heterogeneity, sample size, and the frequency of interim analyses.
+The study will conduct a controlled simulation-based comparison of established analytical strategies rather than proposing a new statistical testing procedure. Because the data-generating mechanisms will be known, the study will evaluate each strategy against the underlying treatment-effect structure and the optimal treatment decision under the simulated truth.
 
 The investigation will focus on four primary questions:
 
-1. **Heterogeneity discovery:** How reliably can genuine treatment-effect modifiers be identified when only a subset of candidate covariates truly modifies the treatment effect?
+1. **Statistical validity:** How do fixed-horizon and sequential analysis strategies differ in Type-I error, power, false subgroup discovery, bias, and uncertainty calibration?
 
-2. **False discoveries:** How frequently are irrelevant covariates or subgroups incorrectly identified as treatment-effect modifiers, particularly when many candidate interactions are examined?
+2. **Detection efficiency:** How do different sequential monitoring and stopping strategies trade off the speed of detecting genuine treatment-effect heterogeneity against sample size and the probability of failing to reach a reliable conclusion?
 
-3. **Sequential monitoring:** How does repeated examination of accumulating experimental data affect the reliability of heterogeneous-effect discovery and the rate of false discoveries?
+3. **Subgroup-effect reliability:** How much selection-induced optimism arises when treatment-effect estimates are obtained for data-driven subgroups, and how does independent or subsequent evaluation affect this optimism?
 
-4. **Decision quality:** Does controlling statistical error in the discovery of treatment heterogeneity lead to better downstream treatment decisions, and what trade-offs arise between false discoveries, missed heterogeneity, and statistical power?
+4. **Decision quality:** Do methods with stronger statistical performance necessarily produce better treatment decisions? This will be evaluated using decision-oriented quantities such as treatment-rule value and regret relative to the optimal treatment rule under the known data-generating mechanism.
 
-The goal is not to propose a new statistical testing procedure, but to conduct a systematic simulation-based investigation of how experimental design, exploratory heterogeneity analysis, sequential monitoring, and statistical error control interact to affect the reliability of data-driven treatment decisions.
+The project will therefore connect four stages of the experimental decision process:
+
+\[
+\text{Sequential monitoring}
+\rightarrow
+\text{HTE discovery}
+\rightarrow
+\text{Treatment-effect estimation}
+\rightarrow
+\text{Treatment decision}.
+\]
+
+The objective is to provide a reproducible, decision-oriented benchmark of established approaches under controlled experimental conditions, with particular attention to the trade-off between early detection, statistical reliability, and downstream decision quality.
 
 ## Study Framework
 
