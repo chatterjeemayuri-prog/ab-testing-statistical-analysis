@@ -83,3 +83,52 @@ Numerical parameter values, covariance structures, sample sizes, and specific he
 
 Numerical parameter values and the specific simulation scenarios will be defined separately before the computational experiments are implemented.
 
+## Simulation Dimensions
+
+The simulation study will vary six primary dimensions that determine the difficulty and reliability of treatment-effect heterogeneity discovery.
+
+### 1. Sample size
+
+The total number of observations in each experiment will be varied across small, moderate, and large sample-size regimes.
+
+This dimension will be used to investigate finite-sample limitations in the estimation and detection of treatment-effect heterogeneity.
+
+### 2. Number of candidate treatment modifiers
+
+The number of pre-treatment covariates and subgroup variables available for potential treatment-effect modification will be varied.
+
+Only a subset of these variables will contain genuine treatment-effect heterogeneity. Increasing the number of candidate modifiers will therefore increase the size of the search space and the opportunity for false discoveries.
+
+### 3. Sparsity of true treatment heterogeneity
+
+The number and proportion of candidate variables that genuinely modify treatment response will be varied.
+
+The study will therefore consider both relatively sparse settings, in which only a small number of variables modify treatment response, and less sparse settings with a larger number of genuine modifiers.
+
+### 4. Strength of treatment-effect heterogeneity
+
+The magnitude of genuine treatment-effect modification will be varied across weak, moderate, and strong regimes.
+
+This will allow the study to investigate the boundary between the existence of treatment heterogeneity and its reliable statistical detection.
+
+### 5. Sequential monitoring intensity
+
+Selected experiments will be evaluated at multiple interim sample sizes.
+
+The frequency of interim analyses will be varied to investigate whether repeated opportunities to inspect accumulating data and search for treatment-effect heterogeneity increase false discoveries or otherwise affect statistical decision-making.
+
+### 6. Correlation among candidate covariates
+
+The dependence structure among candidate pre-treatment covariates will be varied.
+
+Scenarios with weakly correlated covariates will be compared with scenarios containing stronger correlation. This will allow the study to investigate whether correlated candidate modifiers make it more difficult to distinguish genuine treatment-effect modifiers from variables that are associated with them.
+
+### Simulation design principle
+
+The full simulation study will not evaluate every possible combination of these dimensions. Such a design would produce an unnecessarily large and difficult-to-interpret simulation space.
+
+Instead, the study will use a structured set of scenarios. Baseline scenarios will establish reference operating characteristics, followed by targeted perturbations of individual dimensions and a smaller number of combined stress scenarios.
+
+The final simulation grid will be specified before computational experiments are conducted.
+
+
