@@ -22,7 +22,7 @@ The investigation will focus on four primary questions:
 
 The project will therefore connect four stages of the experimental decision process:
 
-\[
+$$
 \text{Sequential monitoring}
 \rightarrow
 \text{HTE discovery}
@@ -30,7 +30,7 @@ The project will therefore connect four stages of the experimental decision proc
 \text{Treatment-effect estimation}
 \rightarrow
 \text{Treatment decision}.
-\]
+$$
 
 The objective is to provide a reproducible, decision-oriented benchmark of established approaches under controlled experimental conditions, with particular attention to the trade-off between early detection, statistical reliability, and downstream decision quality.
 
@@ -38,29 +38,29 @@ The objective is to provide a reproducible, decision-oriented benchmark of estab
 
 The study will use controlled simulation experiments to evaluate established A/B-testing and heterogeneous-treatment-effect analysis strategies under known data-generating mechanisms.
 
-The fundamental unit of the simulation will be a randomized A/B experiment with a binary outcome. For individual \(i\), let
+The fundamental unit of the simulation will be a randomized A/B experiment with a binary outcome. For individual $i$, let
 
-- \(A_i\) denote randomized treatment assignment, with \(A_i=0\) for control and \(A_i=1\) for treatment;
-- \(Y_i\) denote the observed binary outcome;
-- \(X_i\) denote a vector of pre-treatment covariates.
+- $A_i$ denote randomized treatment assignment, with $A_i=0$ for control and $A_i=1$ for treatment;
+- $Y_i$ denote the observed binary outcome;
+- $X_i$ denote a vector of pre-treatment covariates.
 
 Treatment assignment will be randomized according to
 
-\[
+$$
 A_i \sim \operatorname{Bernoulli}(\pi),
-\]
+$$
 
-where the allocation probability \(\pi\) will be specified as part of the simulation design.
+where the allocation probability $\pi$ will be specified as part of the simulation design.
 
 The outcome will be generated from a known data-generating mechanism. The corresponding conditional treatment effect will be defined as
 
-\[
+$$
 \tau(x)
 =
 E\{Y(1)-Y(0)\mid X=x\}.
-\]
+$$
 
-Different simulation scenarios will specify different forms of \(\tau(x)\), including settings with:
+Different simulation scenarios will specify different forms of $\tau(x)$, including settings with:
 
 1. no treatment-effect heterogeneity;
 2. homogeneous treatment effects;
@@ -83,25 +83,25 @@ The study will compare fixed-horizon and sequential analysis strategies. Sequent
 
 When a treatment rule or subgroup is selected, its estimated treatment effect will be distinguished from its true treatment effect under the known data-generating mechanism.
 
-For a treatment rule \(d(x)\in\{0,1\}\), its population value will be defined as
+For a treatment rule $d(x)\in\{0,1\}$, its population value will be defined as
 
-\[
+$$
 V(d)
 =
 E\{Y(d(X))\}.
-\]
+$$
 
-Because the data-generating mechanism is known, the simulation will also define an optimal treatment rule \(d^*(x)\) under each scenario. This permits evaluation of the decision quality of an estimated rule through quantities such as
+Because the data-generating mechanism is known, the simulation will also define an optimal treatment rule $d^*(x)$ under each scenario. This permits evaluation of the decision quality of an estimated rule through quantities such as
 
-\[
+$$
 \operatorname{Regret}(\widehat d)
 =
 V(d^*)-V(\widehat d).
-\]
+$$
 
 The simulation will therefore evaluate the complete experimental decision process:
 
-\[
+$$
 \text{Data generation}
 \rightarrow
 \text{Sequential monitoring}
@@ -111,7 +111,7 @@ The simulation will therefore evaluate the complete experimental decision proces
 \text{Treatment-effect estimation}
 \rightarrow
 \text{Treatment decision}.
-\]
+$$
 
 This framework separates statistical evidence from downstream decision quality. A procedure may identify treatment-effect heterogeneity with high statistical power while still producing a treatment rule with poor value or substantial regret. Conversely, a more conservative procedure may delay detection while producing more reliable treatment decisions.
 
@@ -172,15 +172,15 @@ This strategy is intended to quantify the consequences of separating discovery f
 
 The study will compare:
 
-\[
+$$
 \text{estimated effect at discovery}
-\]
+$$
 
 with
 
-\[
+$$
 \text{effect estimated using subsequent evaluation data}.
-\]
+$$
 
 This will allow selection-induced optimism and the reliability of the resulting treatment decision to be quantified.
 
@@ -192,7 +192,7 @@ The four strategies will be evaluated within a common data-generating framework 
 
 The comparison will therefore focus on the trade-offs among:
 
-\[
+$$
 \text{statistical validity},
 \quad
 \text{detection efficiency},
@@ -200,7 +200,7 @@ The comparison will therefore focus on the trade-offs among:
 \text{effect-estimation reliability},
 \quad
 \text{and decision quality}.
-\]
+$$
 
 The specific statistical procedures used to instantiate Strategies 2–4 will be selected only after their assumptions, estimands, and inferential guarantees have been mapped to the simulation scenarios.
 
@@ -227,15 +227,15 @@ For sequential strategies, the study will quantify the amount of information req
 
 Primary quantities will include:
 
-\[
+$$
 T_{\mathrm{detect}}
-\]
+$$
 
 representing the sample size at which genuine treatment-effect heterogeneity is detected, and
 
-\[
+$$
 E[N_{\mathrm{stop}}]
-\]
+$$
 
 representing the expected sample size at stopping.
 
@@ -249,29 +249,29 @@ For a selected subgroup or treatment rule, the estimated treatment effect will b
 
 Primary quantities will include bias,
 
-\[
+$$
 \operatorname{Bias}
 =
 E[\widehat{\tau}-\tau],
-\]
+$$
 
 and confidence-interval coverage,
 
-\[
+$$
 P\{\tau\in CI\}.
-\]
+$$
 
 The study will also quantify selection-induced optimism by comparing an effect estimated using data involved in discovery with an effect estimated using independent or subsequent evaluation data.
 
 A generic measure of selection optimism will be
 
-\[
+$$
 O
 =
 \widehat{\tau}_{\mathrm{discovery}}
 -
 \widehat{\tau}_{\mathrm{evaluation}}.
-\]
+$$
 
 The interpretation of this quantity will depend on the direction and estimand of the treatment effect being evaluated.
 
@@ -279,23 +279,23 @@ The interpretation of this quantity will depend on the direction and estimand of
 
 Statistical evidence will ultimately be evaluated in terms of the treatment decisions it supports.
 
-For a treatment rule \(d(X)\), the population value will be defined as
+For a treatment rule $d(X)$, the population value will be defined as
 
-\[
+$$
 V(d)
 =
 E\{Y(d(X))\}.
-\]
+$$
 
-Because the true data-generating mechanism is known in simulation, an optimal treatment rule \(d^*(X)\) can be defined for each scenario.
+Because the true data-generating mechanism is known in simulation, an optimal treatment rule $d^*(X)$ can be defined for each scenario.
 
 Decision regret will then be measured as
 
-\[
+$$
 R(\widehat d)
 =
 V(d^*)-V(\widehat d).
-\]
+$$
 
 Additional decision-oriented quantities may include:
 
@@ -312,7 +312,7 @@ The study will investigate whether improved statistical detection necessarily pr
 
 The final comparison will therefore characterize the trade-off between
 
-\[
+$$
 \text{validity}
 \quad\leftrightarrow\quad
 \text{efficiency}
@@ -320,7 +320,7 @@ The final comparison will therefore characterize the trade-off between
 \text{estimation reliability}
 \quad\leftrightarrow\quad
 \text{decision quality}.
-\]
+$$
 
 Exact estimands, performance metrics, and computational definitions will be finalized before the simulation experiments are implemented.
 
