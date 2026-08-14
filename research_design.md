@@ -2,22 +2,25 @@
 
 ## Working Research Question
 
-This project investigates the reliability of statistical decision-making in A/B experiments under realistic sources of uncertainty and model complexity.
+This project investigates the reliability of discovering heterogeneous treatment effects from A/B experiments when analysts have multiple potential treatment modifiers and repeated opportunities to inspect accumulating data.
 
 The central research question is:
 
-> **How robust are A/B-testing conclusions under finite sample sizes, sequential monitoring, covariate variation, and heterogeneous treatment effects, and how can statistical modelling improve the reliability of experimental decisions?**
+> **How reliable is treatment-effect heterogeneity discovered from sequentially monitored A/B experiments when analysts search across multiple pre-treatment covariates and subgroups, and how do statistical error-control strategies affect the quality of the resulting decisions?**
 
-The study will use controlled simulation experiments to examine how different experimental conditions affect estimation, inference, and decision-making. Particular attention will be given to situations in which standard aggregate A/B-test conclusions may become unreliable or fail to capture important features of the underlying treatment effect.
+The study will use controlled simulation experiments in which the true treatment-effect structure is known. The simulated experiments will vary the number of candidate treatment modifiers, the strength and structure of genuine treatment-effect heterogeneity, sample size, and the frequency of interim analyses.
 
-The investigation will focus on three primary questions:
+The investigation will focus on four primary questions:
 
-1. **Finite-sample behaviour:** How do sample size and treatment-effect magnitude affect the operating characteristics of standard A/B-testing procedures?
+1. **Heterogeneity discovery:** How reliably can genuine treatment-effect modifiers be identified when only a subset of candidate covariates truly modifies the treatment effect?
 
-2. **Sequential monitoring:** How does repeated monitoring of an experiment affect false-positive rates and statistical decisions when conventional fixed-horizon inference is used?
+2. **False discoveries:** How frequently are irrelevant covariates or subgroups incorrectly identified as treatment-effect modifiers, particularly when many candidate interactions are examined?
 
-3. **Treatment-effect heterogeneity and covariates:** How do pre-treatment covariates and heterogeneous treatment effects affect aggregate treatment-effect estimates, and can statistical adjustment and interaction modelling improve the reliability and interpretability of experimental conclusions?
+3. **Sequential monitoring:** How does repeated examination of accumulating experimental data affect the reliability of heterogeneous-effect discovery and the rate of false discoveries?
 
+4. **Decision quality:** Does controlling statistical error in the discovery of treatment heterogeneity lead to better downstream treatment decisions, and what trade-offs arise between false discoveries, missed heterogeneity, and statistical power?
+
+The goal is not to propose a new statistical testing procedure, but to conduct a systematic simulation-based investigation of how experimental design, exploratory heterogeneity analysis, sequential monitoring, and statistical error control interact to affect the reliability of data-driven treatment decisions.
 
 ## Study Framework
 
