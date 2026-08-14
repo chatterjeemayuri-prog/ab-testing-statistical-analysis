@@ -1,5 +1,7 @@
 # Research Design
 
+> **Full research paper:** [View the compiled PDF](paper/ab_testing_mini_research.pdf)
+
 ## Working Research Question
 
 This project investigates the statistical and decision-making consequences of sequentially monitoring A/B experiments when treatment-effect heterogeneity is evaluated and potentially used to guide treatment decisions.
