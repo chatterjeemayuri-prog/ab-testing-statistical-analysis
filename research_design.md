@@ -204,6 +204,126 @@ The comparison will therefore focus on the trade-offs among:
 
 The specific statistical procedures used to instantiate Strategies 2–4 will be selected only after their assumptions, estimands, and inferential guarantees have been mapped to the simulation scenarios.
 
+## Evaluation Framework
+
+The performance of each analytical strategy will be evaluated across four complementary domains: statistical validity, detection efficiency, estimation reliability, and decision quality.
+
+### 1. Statistical validity
+
+Statistical validity will assess whether a procedure maintains appropriate error rates under scenarios in which the relevant null hypothesis is true.
+
+Primary quantities will include:
+
+- empirical Type-I error;
+- false treatment-effect modifier discovery;
+- false subgroup discovery; and
+- power or true-discovery probability when genuine treatment effects or treatment-effect heterogeneity are present.
+
+For sequential procedures, error rates will be evaluated with respect to the complete monitoring and stopping process rather than only the final analysis.
+
+### 2. Detection efficiency
+
+For sequential strategies, the study will quantify the amount of information required to reach a discovery or stopping decision.
+
+Primary quantities will include:
+
+\[
+T_{\mathrm{detect}}
+\]
+
+representing the sample size at which genuine treatment-effect heterogeneity is detected, and
+
+\[
+E[N_{\mathrm{stop}}]
+\]
+
+representing the expected sample size at stopping.
+
+The probability of failing to reach a discovery decision before the maximum permitted sample size will also be evaluated.
+
+These quantities will allow statistical reliability to be compared against the speed and data requirements of different analysis strategies.
+
+### 3. Estimation reliability
+
+For a selected subgroup or treatment rule, the estimated treatment effect will be compared with the corresponding true effect under the data-generating mechanism.
+
+Primary quantities will include bias,
+
+\[
+\operatorname{Bias}
+=
+E[\widehat{\tau}-\tau],
+\]
+
+and confidence-interval coverage,
+
+\[
+P\{\tau\in CI\}.
+\]
+
+The study will also quantify selection-induced optimism by comparing an effect estimated using data involved in discovery with an effect estimated using independent or subsequent evaluation data.
+
+A generic measure of selection optimism will be
+
+\[
+O
+=
+\widehat{\tau}_{\mathrm{discovery}}
+-
+\widehat{\tau}_{\mathrm{evaluation}}.
+\]
+
+The interpretation of this quantity will depend on the direction and estimand of the treatment effect being evaluated.
+
+### 4. Decision quality
+
+Statistical evidence will ultimately be evaluated in terms of the treatment decisions it supports.
+
+For a treatment rule \(d(X)\), the population value will be defined as
+
+\[
+V(d)
+=
+E\{Y(d(X))\}.
+\]
+
+Because the true data-generating mechanism is known in simulation, an optimal treatment rule \(d^*(X)\) can be defined for each scenario.
+
+Decision regret will then be measured as
+
+\[
+R(\widehat d)
+=
+V(d^*)-V(\widehat d).
+\]
+
+Additional decision-oriented quantities may include:
+
+- probability of deploying an ineffective treatment rule;
+- probability of failing to deploy a genuinely beneficial treatment rule;
+- treatment-rule value;
+- and the relationship between statistical evidence and downstream decision quality.
+
+### Integrated evaluation
+
+The four evaluation domains will be considered jointly rather than as independent performance rankings.
+
+The study will investigate whether improved statistical detection necessarily produces improved treatment decisions, and whether more conservative procedures can achieve better decision quality by reducing false discoveries, estimation optimism, or unstable treatment-rule selection.
+
+The final comparison will therefore characterize the trade-off between
+
+\[
+\text{validity}
+\quad\leftrightarrow\quad
+\text{efficiency}
+\quad\leftrightarrow\quad
+\text{estimation reliability}
+\quad\leftrightarrow\quad
+\text{decision quality}.
+\]
+
+Exact estimands, performance metrics, and computational definitions will be finalized before the simulation experiments are implemented.
+
 ## Simulation Dimensions
 
 The simulation study will vary six primary dimensions that determine the difficulty and reliability of treatment-effect heterogeneity discovery.
